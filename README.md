@@ -2,6 +2,8 @@
 
 Personal configuration files for sway, nvim, vim, kitty, zsh, and waybar.
 
+<img width="1920" height="1080" alt="20260402_16h27m47s_grim" src="https://github.com/user-attachments/assets/90ab49af-ebe7-46b4-a355-bcbfa616a382" />
+
 ## Structure
 
 This repository is organized for use with [GNU Stow](https://www.gnu.org/software/stow/).
