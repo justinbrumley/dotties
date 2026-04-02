@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+
+# Navigate to another workspace
+# Args:
+#   $1 = Direction (next or previous) or output number
+function navigate {
+    FOCUSED_WORKSPACE_NUM=$(swaymsg -t get_workspaces | jq --raw-output '. | map(select(.focused == true)) | .[0].name' | awk '{print $1}')
+    FOCUSED_OUTPUT_NUM=$(swaymsg -t get_outputs | jq --raw-output '. | map(select(.focused==true)) | .[0].id')
+    FOCUSED_WORKSPACE_NUM=$(expr ${FOCUSED_WORKSPACE_NUM} - ${FOCUSED_OUTPUT_NUM} \* 100)
+
+    if [[ ${FOCUSED_OUTPUT_NUM} -eq "4" ]]; then
+      WORKSPACE_NAMES=(
+        ["1"]="SLACK"
+        ["2"]="DISCORD"
+        ["3"]="PLAYER"
+        ["4"]="SCRATCH"
+        ["5"]="MISC"
+      )
+    else
+      WORKSPACE_NAMES=(
+        ["1"]="WEB"
+        ["2"]="TERMINAL"
+        ["3"]="SHELL"
+        ["4"]="STEAM"
+        ["5"]="MISC"
+      )
+    fi
+
+    # Find the next workspace number
+    if [[ $1 == "next" ]]; then
+        TARGET_WORKSPACE_NUM=$(expr ${FOCUSED_WORKSPACE_NUM} + 1)
+    elif [[ $1 == "previous" ]]; then
+        TARGET_WORKSPACE_NUM=$(expr ${FOCUSED_WORKSPACE_NUM} - 1)
+    else
+        TARGET_WORKSPACE_NUM=$1
+    fi
+
+    if [[ ${TARGET_WORKSPACE_NUM} -gt 5 ]]; then
+        TARGET_WORKSPACE_NUM="1"
+    elif [[ ${TARGET_WORKSPACE_NUM} -lt 1 ]]; then
+        TARGET_WORKSPACE_NUM="5"
+    fi
+
+    OUTPUT_AND_WORKSPACE_NUM=$(expr ${FOCUSED_OUTPUT_NUM} \* 100 + ${TARGET_WORKSPACE_NUM})
+    TARGET_WORKSPACE_NAME=${WORKSPACE_NAMES[TARGET_WORKSPACE_NUM]}
+
+    swaymsg "workspace ${OUTPUT_AND_WORKSPACE_NUM} ${TARGET_WORKSPACE_NUM} ${TARGET_WORKSPACE_NAME}"
+}
+
+# Move the focused container to another workspace
+# Args:
+#   $1 = Target workspace number
+function move {
+    FOCUSED_WORKSPACE_NUM=$(swaymsg -t get_workspaces | jq --raw-output '. | map(select(.focused == true)) | .[0].name' | awk '{print $1}')
+    FOCUSED_OUTPUT_NUM=$(swaymsg -t get_outputs | jq --raw-output '. | map(select(.focused==true)) | .[0].id')
+    FOCUSED_WORKSPACE_NUM=$(expr ${FOCUSED_WORKSPACE_NUM} - ${FOCUSED_OUTPUT_NUM} \* 100)
+
+    if [[ ${FOCUSED_OUTPUT_NUM} -eq "4" ]]; then
+      WORKSPACE_NAMES=(
+        ["1"]="SLACK"
+        ["2"]="DISCORD"
+        ["3"]="PLAYER"
+        ["4"]="SCRATCH"
+        ["5"]="MISC"
+      )
+    else
+      WORKSPACE_NAMES=(
+        ["1"]="WEB"
+        ["2"]="TERMINAL"
+        ["3"]="SHELL"
+        ["4"]="STEAM"
+        ["5"]="MISC"
+      )
+    fi
+
+    # Find the next workspace number
+    if [[ $1 == "next" ]]; then
+        TARGET_WORKSPACE_NUM=$(expr ${FOCUSED_WORKSPACE_NUM} + 1)
+    elif [[ $1 == "previous" ]]; then
+        TARGET_WORKSPACE_NUM=$(expr ${FOCUSED_WORKSPACE_NUM} - 1)
+    else
+        TARGET_WORKSPACE_NUM=$1
+    fi
+
+    if [[ ${TARGET_WORKSPACE_NUM} -gt 5 ]]; then
+        TARGET_WORKSPACE_NUM="1"
+    elif [[ ${TARGET_WORKSPACE_NUM} -lt 1 ]]; then
+        TARGET_WORKSPACE_NUM="5"
+    fi
+
+    OUTPUT_AND_WORKSPACE_NUM=$(expr ${FOCUSED_OUTPUT_NUM} \* 100 + ${TARGET_WORKSPACE_NUM})
+    TARGET_WORKSPACE_NAME=${WORKSPACE_NAMES[TARGET_WORKSPACE_NUM]}
+
+    # Move the container
+    swaymsg  "move container to workspace ${OUTPUT_AND_WORKSPACE_NUM} ${TARGET_WORKSPACE_NUM} ${TARGET_WORKSPACE_NAME}"
+
+    # Then move focus to that workspace
+    swaymsg  "workspace ${OUTPUT_AND_WORKSPACE_NUM} ${TARGET_WORKSPACE_NUM} ${TARGET_WORKSPACE_NAME}"
+}
+
+# Initialize workspaces on all screens
+# Args: None
+function startup {
+    # Focus first workspace on both outputs
+    # Hard coded cuz lazy
+    swaymsg focus output "DP-1" && swaymsg workspace "301 1 WEB"
+    swaymsg focus output "HDMI-A-1" && swaymsg workspace "401 1 SLACK"
+
+    # Then focus main output
+    swaymsg focus output "DP-1"
+}
+
+if [[ $1 == "navigate" ]]; then
+    navigate $2
+elif [[ $1 == "move" ]]; then
+    move $2
+elif [[ $1 == "startup" ]]; then
+    startup
+else
+    echo "unknown command"
+    exit 1
+fi

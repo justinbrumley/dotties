@@ -1,0 +1,9 @@
+#!/bin/bash
+
+COMMAND=$@
+
+if [ ! -f .env ]; then
+  eval $COMMAND && exit
+fi
+
+env -S $(grep -v '^#' .env) $COMMAND

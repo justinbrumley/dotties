@@ -1,0 +1,63 @@
+/*
+ ********************************************
+ *░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░*
+ *░░█▀█░█░░░█░█░█▀▀░░░█░█░█░░░▀█▀░█▀▄░█▀█░░*
+ *░░█▀▀░█░░░█░█░▀▀█░░░█░█░█░░░░█░░█▀▄░█▀█░░*
+ *░░▀░░░▀▀▀░▀▀▀░▀▀▀░░░▀▀▀░▀▀▀░░▀░░▀░▀░▀░▀░░*
+ *░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░*
+ ********************************************
+ */
+
+* {
+	border: none;
+	font-family: Fira Code;
+	font-size: 16px;
+}
+
+window#waybar {
+  color: #e9e6e0;
+  background: #1a1e25;
+}
+
+#window {
+  color: #e9e6e0;
+  transition: none;
+}
+
+#workspaces, #clock, #custom-player, #custom-controller, #tray, #wireplumber {
+}
+
+#clock {
+  margin-right: 8px;
+}
+
+#workspaces button {
+  color: #e9e6e0;
+  opacity: .5;
+}
+
+#workspaces button:hover {
+  opacity: 1;
+}
+
+#workspaces button.focused {
+  opacity: 1;
+}
+
+#workspaces button.urgent {
+  color: #eb4d4b;
+  opacity: 1;
+}
+
+#window,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-spotify,
+#custom-controller,
+#tray,
+#temperature,
+#cpu,
+#memory {
+  margin-right: 8px;
+}
