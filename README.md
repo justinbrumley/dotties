@@ -29,7 +29,20 @@ This repository is organized for use with [GNU Stow](https://www.gnu.org/softwar
    cd ~/dotties
    ```
 
-2. Use GNU Stow to symlink configurations:
+2. Run the installation script (Arch Linux only):
+   ```bash
+   ./install.sh
+   ```
+
+   The script will:
+   - Update system packages
+   - Install required dependencies (sway, waybar, kitty, neovim, zsh, etc.)
+   - Optionally install AUR packages via yay/paru
+   - Setup oh-my-zsh and other tools
+   - Offer to stow the dotfiles automatically
+   - Optionally change your default shell to zsh
+
+3. Or manually use GNU Stow to symlink configurations:
    ```bash
    stow .
    ```
