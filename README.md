@@ -2,7 +2,7 @@
 
 Personal configuration files for sway, nvim, vim, kitty, zsh, and waybar.
 
-<img width="1920" height="1080" alt="20260402_16h27m47s_grim" src="https://github.com/user-attachments/assets/90ab49af-ebe7-46b4-a355-bcbfa616a382" />
+<img width="1920" height="1080" alt="20260511_11h16m56s_grim" src="https://github.com/user-attachments/assets/c6be5f47-cf15-42a0-bb5b-2db92f41ade4" />
 
 ## Structure
 
