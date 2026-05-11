@@ -3,12 +3,29 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
-// Workspace setup
+// DP-1 Workspaces
 workspace "browser" {
   open-on-output "DP-1"
 }
 
+workspace "dev" {
+  open-on-output "DP-1"
+}
+
+workspace "steam" {
+  open-on-output "DP-1"
+}
+
+// HDMI-A-1 Workspaces
 workspace "chat" {
+  open-on-output "HDMI-A-1"
+}
+
+workspace "discord" {
+  open-on-output "HDMI-A-1"
+}
+
+workspace "player" {
   open-on-output "HDMI-A-1"
 }
 
@@ -263,8 +280,11 @@ environment {
 
 spawn-at-startup "waybar"
 spawn-sh-at-startup "vicinae server"
-spawn-sh-at-startup "swaybg -i /home/justin/Pictures/gowall/ign_chomusuke.png"
-spawn-at-startup "mako"
+
+// spawn-sh-at-startup "swaybg -i /home/justin/Pictures/gowall/ign_chomusuke.png"
+spawn-sh-at-startup "swaybg -i /home/justin/Pictures/gowall/yshtola.png"
+
+// spawn-at-startup "mako"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -303,13 +323,23 @@ window-rule {
 // Floating windows, like FF picture-in-picture,
 // and steam friends list
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="steam" title="Friends List"
+  // This app-id regular expression will work for both:
+  // - host Firefox (app-id is "firefox")
+  // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+  match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+  match app-id="steam" title="Friends List"
+  match app-id="steam" title="Steam Settings"
+  match app-id="XIVLauncher.Core"
 
-    open-floating true
+  open-floating true
+}
+
+window-rule {
+  match title="FFXIVLauncher"
+
+  open-floating true
+  max-width 1230
+  max-height 692
 }
 
 // Example: block out two password managers from screen capture.
@@ -329,6 +359,12 @@ window-rule {
   match app-id="yubi"
 
   open-floating true
+  default-window-height { fixed 300; }
+  default-floating-position x=8 y=8 relative-to="top-right"
+
+  // 487 x 358
+  max-width 487
+  max-height 358
 }
 
 // Steam
