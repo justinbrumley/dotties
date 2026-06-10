@@ -281,7 +281,6 @@ environment {
 spawn-at-startup "waybar"
 spawn-sh-at-startup "vicinae server"
 
-// spawn-sh-at-startup "swaybg -i /home/justin/Pictures/gowall/ign_chomusuke.png"
 spawn-sh-at-startup "swaybg -i /home/justin/Pictures/gowall/yshtola.png"
 
 // spawn-at-startup "mako"
@@ -326,19 +325,23 @@ window-rule {
   // This app-id regular expression will work for both:
   // - host Firefox (app-id is "firefox")
   // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-  match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+  match title="^Picture-in-Picture$"
   match app-id="steam" title="Friends List"
   match app-id="steam" title="Steam Settings"
   match app-id="XIVLauncher.Core"
+  match app-id="feh"
 
   open-floating true
 }
 
 window-rule {
   match title="FFXIVLauncher"
+  match app-id="chrome-meet.google.com__landing-Default"
 
+  // 945 x 692
   open-floating true
-  max-width 1230
+  default-floating-position x=488 y=194 relative-to="top-left"
+  max-width 945
   max-height 692
 }
 
@@ -378,7 +381,7 @@ window-rule {
 
 // Slack / Discord / Spotify
 window-rule {
-  match app-id="Slack"
+  match app-id="slack"
   match app-id="discord"
   match app-id="Spotify"
 
@@ -390,6 +393,7 @@ window-rule {
 // Firefox
 window-rule {
   match app-id="firefox"
+  match app-id="zen"
 
   open-maximized true
 }
@@ -419,9 +423,10 @@ binds {
     Mod+Y hotkey-overlay-title="Open Yubi TUI" { spawn-sh "kitty --class \"yubi\" zsh -c \"source /home/justin/.zshrc && yubi\""; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+B hotkey-overlay-title="Open browser: firefox" { spawn "firefox"; }
+    Mod+B hotkey-overlay-title="Open browser: zen-browser" { spawn "zen-browser"; }
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+space hotkey-overlay-title="Run an Application: vicinae" { spawn-sh "vicinae open | xargs swaymsg exec --"; }
+    Mod+C hotkey-overlay-title="Clipboard History: vicinae" { spawn-sh "vicinae deeplink vicinae://launch/clipboard/history"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -624,7 +629,7 @@ binds {
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
-    Mod+C { center-column; }
+    // Mod+C { center-column; }
 
     // Center all fully visible columns on screen.
     Mod+Ctrl+C { center-visible-columns; }
